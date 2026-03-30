@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - "app-net"
+    hostname: app_nginx
+    container_name: app_nginx
+    volumes:
+      - ./appng.conf/:/etc/nginx/conf.d/appng.conf
+
+
+  cr-app:
+    restart: always
+    image: "pywebd:v1"
+    networks:
+      - "app-net"
+    hostname: pywebd
+    container_name: pywebd
+
+networks:
+  "app-net":
+    driver: bridge
+
